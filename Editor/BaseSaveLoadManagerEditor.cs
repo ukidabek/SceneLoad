@@ -8,20 +8,11 @@ namespace BaseGameLogic.SceneManagement
 {
     [CustomEditor(typeof(BaseSceneLoadManager), true)]
     public class BaseSaveLoadManagerEditor : Editor
-    {
-        [MenuItem("BaseGameLogic/SaveLoad/Create SaveLoadManager")]
-        public static BaseSceneLoadManager CreateSaveLoadManager()
-		{
-            return GameObjectExtension.CreateInstanceOfAbstractType<BaseSceneLoadManager>();
-        }
-
-        //private BaseSceneLoadManager _manager = null;
-        
+    {        
         private ReorderableList list;
 
         private void OnEnable() 
         {
-            //_manager = target as BaseSceneLoadManager;
             list = new ReorderableList(serializedObject, serializedObject.FindProperty("_sceneSetList"), 
                 true, true, true, true);
             list.drawElementCallback = DrawElement;
@@ -44,8 +35,7 @@ namespace BaseGameLogic.SceneManagement
 
         private void DrawHeader(Rect rect)
         {
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight),   
-            "Scene Sets List");
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight), "Scene Sets List");
         }
 
         private void DrawElement(Rect rect, int index, bool isActive, bool isFocused)

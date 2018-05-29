@@ -2,17 +2,15 @@
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
-using System;
 using System.Collections;
 using System.Collections.Generic;
 
-using BaseGameLogic.Singleton;
 
 namespace BaseGameLogic.SceneManagement
 {
-    public abstract class BaseSceneLoadManager : Singleton<BaseSceneLoadManager>
+    public abstract class BaseSceneLoadManager : MonoBehaviour
     {
+        public static BaseSceneLoadManager Instance { get; private set; }
         [Header("Events:")]
         public UnityEvent LoadingStart = new UnityEvent();
         public FloatUnityEvent LoadingProgressUpdate = new FloatUnityEvent();
@@ -34,6 +32,14 @@ namespace BaseGameLogic.SceneManagement
         [SerializeField, Range(0f, 1f)]
         private float _loadingProgress = 0;
         private float _progressPerScene = 0;
+
+        private void Awake()
+        {
+            if (Instance == null)
+                Instance = this;
+            else
+                Destroy(this.gameObject);
+        }
 
         private void Update()
         {
